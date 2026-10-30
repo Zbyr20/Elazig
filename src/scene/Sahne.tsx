@@ -48,9 +48,12 @@ function Kamera() {
 function Isiklar() {
   return (
     <>
-      <hemisphereLight args={["#9fb6c4", "#14161a", 0.75]} />
-      <directionalLight position={[8, 12, 6]} intensity={1.45} color="#f0e3cd" />
-      <directionalLight position={[-9, 4, -7]} intensity={0.5} color="#4a8c8c" />
+      {/* Üstten açık gökyüzü, alttan ovanın sıcak yansıması */}
+      <hemisphereLight args={["#bcd2e0", "#6b563b", 0.95]} />
+      {/* Alçak güneş: kireçtaşı surları sarıya çeker, gölgeleri uzatır */}
+      <directionalLight position={[9, 11, 5]} intensity={2.1} color="#ffe9c4" />
+      {/* Karşı taraftan turkuaz dolgu — su ve buz için */}
+      <directionalLight position={[-9, 4, -7]} intensity={0.65} color="#6fb9c4" />
     </>
   );
 }
@@ -68,8 +71,8 @@ export default function Sahne() {
         gl={{ antialias: true, powerPreference: "high-performance" }}
         camera={{ fov: 42, near: 0.1, far: 120, position: [6, 5, 12] }}
       >
-        <color attach="background" args={["#141619"]} />
-        <fog attach="fog" args={["#141619", 11, 34]} />
+        <color attach="background" args={["#191714"]} />
+        <fog attach="fog" args={["#191714", 12, 38]} />
         <Isiklar />
         <Kamera />
         {MODELLER.map((Model, i) => (
