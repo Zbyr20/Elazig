@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bazalt: #1c1e22;
+  --color-bazalt-derin: #141619;
+  --color-tas: #3a3d44;
+  --color-hazar: #4a8c8c;
+  --color-uzum: #6b2639;
+  --color-kirec: #e8e4dc;
+  --color-bugday: #c9a227;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-bazalt-derin);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-kirec);
+    background-color: var(--color-bazalt-derin);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-variation-settings: "opsz" 120;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-bugday);
+    outline-offset: 3px;
+  }
+}
+
+/* Okunabilirliği 3B katmanın üstünde güvenceye alan yumuşak zemin. */
+.yazi-zemini {
+  background: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--color-bazalt-derin) 88%, transparent) 0%,
+    color-mix(in oklab, var(--color-bazalt-derin) 72%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+@media (max-width: 767px) {
+  .yazi-zemini {
+    background: color-mix(in oklab, var(--color-bazalt-derin) 82%, transparent);
+  }
+}
