@@ -25,8 +25,8 @@ export function Ustbar() {
         >
           Elazığ
         </a>
-        <ul className="ml-auto hidden gap-6 text-sm text-tas-acik/55 sm:flex">
-          {duvarlar.map((d) => (
+        <ul className="ml-auto hidden gap-5 text-sm text-tas-acik/50 lg:flex">
+          {duvarlar.slice(0, 4).map((d) => (
             <li key={d.id}>
               <a href={`#${d.id}`} className="transition-colors hover:text-tas-acik">
                 {d.ad}
@@ -44,22 +44,22 @@ export function Ustbar() {
   );
 }
 
-/** Kaç duvar döndüğümüzü gösteren, solda duran ince ray. */
+/** Kulede kaçıncı katta olduğumuzu gösteren ray. */
 export function Ray({ etkin }: { etkin: string }) {
   return (
     <div className="pointer-events-none fixed left-5 top-1/2 z-20 hidden -translate-y-1/2 lg:block">
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-2.5">
         {duvarlar.map((d) => {
           const aktif = d.id === etkin;
           return (
             <li key={d.id} className="flex items-center gap-3">
               <span
                 className={`block h-px transition-all duration-500 ${
-                  aktif ? "w-8 bg-okra" : "w-3 bg-tas-acik/25"
+                  aktif ? "w-8 bg-okra" : "w-3 bg-tas-acik/22"
                 }`}
               />
               <span
-                className={`text-xs transition-opacity duration-500 ${
+                className={`whitespace-nowrap text-xs transition-opacity duration-500 ${
                   aktif ? "text-okra opacity-100" : "opacity-0"
                 }`}
               >
@@ -77,31 +77,36 @@ export function Hero() {
   return (
     <section id="ust" className="relative flex min-h-screen items-center px-5 pt-24 sm:px-8">
       <div className="max-w-2xl py-10">
+        <p className="font-display text-sm tracking-wide text-okra">Sekiz niş · iki tur · bir iniş</p>
         <h1
-          className="font-display text-[clamp(2.5rem,6.6vw,5rem)] leading-[0.95] text-tas-acik"
+          className="mt-4 font-display text-[clamp(2.5rem,6.6vw,5rem)] leading-[0.95] text-tas-acik"
           style={{ fontVariationSettings: '"opsz" 144' }}
         >
-          Taşın dört yüzü
+          Taşa kazınmış<br />bir Elazığ
         </h1>
         <p className="mt-7 max-w-[52ch] text-base leading-relaxed text-tas-acik/70 sm:text-lg">
-          Harput'un kesme taşından bir kule. Dört duvarında Elazığ'ın dört ayrı
-          yüzü kayıtlı: kayanın üstündeki kale, fayın açtığı göl, Fırat'ın önüne
-          kurulan gövde ve yazın buz tutan mağara.
+          Harput kesme taşından bir kule. Sekiz nişinin her birinde yörenin bir
+          yüzü oyulu: kayanın üstündeki kale, fayın açtığı göl, Fırat'ın önüne
+          kurulan gövde, yazın buz tutan mağara, eğri minare, bağlar, ova ve
+          karanlıkta yanan mumlar.
         </p>
         <p className="mt-10 text-sm text-tas-acik/40">
-          Kaydırdıkça kule döner ve her duvarda bir kat aşağı inersin.
+          Kaydırdıkça kule döner, ışık çekilir ve bir kat aşağı inersin.
         </p>
       </div>
     </section>
   );
 }
 
+const SIRA = ["Birinci", "İkinci", "Üçüncü", "Dördüncü",
+              "Beşinci", "Altıncı", "Yedinci", "Sekizinci"];
+
 export function DuvarBolumu({ duvar, sira }: { duvar: Duvar; sira: number }) {
   return (
     <section id={duvar.id} className="relative flex min-h-screen items-center px-5 sm:px-8">
       <div className="max-w-xl py-10">
         <p className="font-display text-sm text-okra">
-          {["Birinci", "İkinci", "Üçüncü", "Dördüncü"][sira]} duvar · {duvar.tur}
+          {SIRA[sira]} niş · {duvar.tur}
         </p>
         <h2 className="mt-3 font-display text-[clamp(2rem,4.4vw,3.1rem)] leading-tight text-tas-acik">
           {duvar.ad}

@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import { DuvarBolumu, Hero, Ray, Ustbar } from "./components/Arayuz";
-import { cayda, duvarlar, sofra, uzum, ziyaret } from "./data/icerik";
+import { duvarlar, sofra, ziyaret } from "./data/icerik";
 import { scrollDinleyiciBasla } from "./scroll";
 
 // Three.js paketin büyük bölümünü oluşturur; metin onu beklemesin.
@@ -35,7 +35,7 @@ export default function App() {
 
       {/* Metnin okunurluğunu sağlayan tek parça perde */}
       <div
-        className="metin-perdesi pointer-events-none fixed inset-0 z-[5] md:right-auto md:w-[68%]"
+        className="metin-perdesi pointer-events-none fixed inset-0 z-[5] md:right-auto md:w-[66%]"
         aria-hidden="true"
       />
 
@@ -61,17 +61,6 @@ export default function App() {
                 </div>
               ))}
             </div>
-
-            <div className="mt-20 grid gap-10 border-t border-tas-acik/12 pt-10 sm:grid-cols-2">
-              <div>
-                <h3 className="font-display text-xl text-tas-acik">{uzum.ad}</h3>
-                <p className="mt-2 leading-relaxed text-tas-acik/65">{uzum.metin}</p>
-              </div>
-              <div>
-                <h3 className="font-display text-xl text-tas-acik">{cayda.ad}</h3>
-                <p className="mt-2 leading-relaxed text-tas-acik/65">{cayda.metin}</p>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -95,8 +84,8 @@ export default function App() {
           <div className="max-w-3xl py-10 text-sm text-tas-acik/45">
             <p className="max-w-[62ch]">
               Kule, Elazığ yöresini anlatmak için tasarlanmış bir yapıdır; belirli
-              bir tarihi binanın ölçekli kopyası değildir. Kitabe panellerindeki
-              görseller taşa oyulmuş çizimlerdir.
+              bir tarihi binanın ölçekli kopyası değildir. Nişlerdeki sahneler
+              konuların taştan yorumlarıdır.
             </p>
             <p className="mt-4">Elazığ yöresini tanıtmak için hazırlandı.</p>
           </div>
