@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# yerel ekran goruntuleri
+goruntu_*.png

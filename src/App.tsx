@@ -1,32 +1,28 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { Hero, MekanBolumu, Ray, Ustbar } from "./components/Arayuz";
-import { cayda, mekanlar, sofra, uzum, ziyaret } from "./data/icerik";
+import { DuvarBolumu, Hero, Ray, Ustbar } from "./components/Arayuz";
+import { cayda, duvarlar, sofra, uzum, ziyaret } from "./data/icerik";
 import { scrollDinleyiciBasla } from "./scroll";
 
-// Three.js paketin büyük bölümünü oluşturur; metin içeriği onu beklemesin.
+// Three.js paketin büyük bölümünü oluşturur; metin onu beklemesin.
 const Sahne = lazy(() => import("./scene/Sahne"));
 
-const izlenen = ["harput", "hazar", "keban", "buzluk", "bag"];
-
 export default function App() {
-  const [etkin, setEtkin] = useState("harput");
+  const [etkin, setEtkin] = useState(duvarlar[0].id);
 
   useEffect(() => scrollDinleyiciBasla(), []);
 
   useEffect(() => {
-    const gozlemci = new IntersectionObserver(
+    const g = new IntersectionObserver(
       (girisler) => {
-        for (const g of girisler) {
-          if (g.isIntersecting) setEtkin(g.target.id);
-        }
+        for (const x of girisler) if (x.isIntersecting) setEtkin(x.target.id);
       },
       { rootMargin: "-45% 0px -45% 0px" },
     );
-    for (const id of izlenen) {
-      const el = document.getElementById(id);
-      if (el) gozlemci.observe(el);
+    for (const d of duvarlar) {
+      const el = document.getElementById(d.id);
+      if (el) g.observe(el);
     }
-    return () => gozlemci.disconnect();
+    return () => g.disconnect();
   }, []);
 
   return (
@@ -37,57 +33,58 @@ export default function App() {
       <Ustbar />
       <Ray etkin={etkin} />
 
+      {/* Metnin okunurluğunu sağlayan tek parça perde */}
+      <div
+        className="metin-perdesi pointer-events-none fixed inset-0 z-[5] md:right-auto md:w-[68%]"
+        aria-hidden="true"
+      />
+
       <main className="relative z-10 mx-auto max-w-6xl">
         <Hero />
 
-        {mekanlar.map((m) => (
-          <MekanBolumu key={m.id} mekan={m} />
+        {duvarlar.map((d, i) => (
+          <DuvarBolumu key={d.id} duvar={d} sira={i} />
         ))}
 
-        {/* Bağ ve Öküzgözü */}
-        <section id="bag" className="relative flex min-h-screen items-center px-5 sm:px-8">
-          <div className="yazi-zemini -mx-5 max-w-xl px-5 py-10 sm:-mx-8 sm:px-8">
-            <p className="text-sm text-hazar">Üzüm</p>
-            <h2 className="mt-3 font-display text-[clamp(2rem,4.5vw,3.2rem)] leading-tight text-kirec">
-              {uzum.ad}
-            </h2>
-            <p className="mt-5 max-w-[60ch] text-lg leading-relaxed text-kirec/75">{uzum.metin}</p>
-          </div>
-        </section>
-
-        {/* Sofra */}
         <section id="sofra" className="relative px-5 py-28 sm:px-8">
-          <div className="yazi-zemini -mx-5 px-5 py-12 sm:-mx-8 sm:px-8">
-            <h2 className="font-display text-[clamp(2rem,4.5vw,3.2rem)] leading-tight text-kirec">
+          <div className="max-w-3xl py-12">
+            <h2 className="font-display text-[clamp(2rem,4.4vw,3.1rem)] leading-tight text-tas-acik">
               Sofrada ne var
             </h2>
-            <div className="mt-12 grid gap-x-14 gap-y-10 sm:grid-cols-2">
+            <div className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2">
               {sofra.map((l) => (
                 <div key={l.ad}>
-                  <h3 className="font-display text-xl text-bugday">{l.ad}</h3>
-                  <p className="mt-2 max-w-[46ch] leading-relaxed text-kirec/65">{l.aciklama}</p>
+                  <h3 className="font-display text-xl text-okra">{l.ad}</h3>
+                  <p className="mt-2 max-w-[46ch] leading-relaxed text-tas-acik/65">
+                    {l.aciklama}
+                  </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-20 max-w-xl border-t border-kirec/10 pt-10">
-              <h3 className="font-display text-xl text-kirec">{cayda.ad}</h3>
-              <p className="mt-2 leading-relaxed text-kirec/65">{cayda.metin}</p>
+            <div className="mt-20 grid gap-10 border-t border-tas-acik/12 pt-10 sm:grid-cols-2">
+              <div>
+                <h3 className="font-display text-xl text-tas-acik">{uzum.ad}</h3>
+                <p className="mt-2 leading-relaxed text-tas-acik/65">{uzum.metin}</p>
+              </div>
+              <div>
+                <h3 className="font-display text-xl text-tas-acik">{cayda.ad}</h3>
+                <p className="mt-2 leading-relaxed text-tas-acik/65">{cayda.metin}</p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Ziyaret */}
         <section id="ziyaret" className="relative px-5 pb-28 sm:px-8">
-          <div className="yazi-zemini -mx-5 px-5 py-12 sm:-mx-8 sm:px-8">
-            <h2 className="font-display text-[clamp(2rem,4.5vw,3.2rem)] leading-tight text-kirec">
+          <div className="max-w-3xl py-12">
+            <h2 className="font-display text-[clamp(2rem,4.4vw,3.1rem)] leading-tight text-tas-acik">
               Gitmeden önce
             </h2>
-            <div className="mt-12 grid gap-10 sm:grid-cols-3">
+            <div className="mt-12 grid gap-9 sm:grid-cols-3">
               {ziyaret.map((z) => (
                 <div key={z.baslik}>
                   <h3 className="font-display text-lg text-hazar">{z.baslik}</h3>
-                  <p className="mt-2 leading-relaxed text-kirec/65">{z.metin}</p>
+                  <p className="mt-2 leading-relaxed text-tas-acik/65">{z.metin}</p>
                 </div>
               ))}
             </div>
@@ -95,10 +92,11 @@ export default function App() {
         </section>
 
         <footer className="relative px-5 pb-16 sm:px-8">
-          <div className="yazi-zemini -mx-5 px-5 py-10 text-sm text-kirec/45 sm:-mx-8 sm:px-8">
-            <p className="max-w-[60ch]">
-              Sayfadaki üç boyutlu görseller, anlatılan mekânların ölçekli temsilleri değil;
-              biçimlerinden yola çıkan stilize yorumlardır.
+          <div className="max-w-3xl py-10 text-sm text-tas-acik/45">
+            <p className="max-w-[62ch]">
+              Kule, Elazığ yöresini anlatmak için tasarlanmış bir yapıdır; belirli
+              bir tarihi binanın ölçekli kopyası değildir. Kitabe panellerindeki
+              görseller taşa oyulmuş çizimlerdir.
             </p>
             <p className="mt-4">Elazığ yöresini tanıtmak için hazırlandı.</p>
           </div>

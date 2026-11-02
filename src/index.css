@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bazalt: #1c1e22;
-  --color-bazalt-derin: #191714;
-  --color-tas: #3a3d44;
-  --color-hazar: #4a8c8c;
-  --color-uzum: #6b2639;
-  --color-kirec: #e8e4dc;
-  --color-bugday: #c9a227;
+  /* Elazığ kireçtaşı ve gece ovası */
+  --color-gece: #17130e;
+  --color-gece-acik: #241d14;
+  --color-tas: #c7b28b;
+  --color-tas-acik: #e9dcc2;
+  --color-okra: #b8873f;
+  --color-hazar: #4a9aa0;
+  --color-uzum: #7b2b3c;
 
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
@@ -16,55 +17,50 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-bazalt-derin);
+    background-color: var(--color-gece);
   }
-
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+    html { scroll-behavior: auto; }
   }
-
   body {
     margin: 0;
     font-family: var(--font-sans);
-    color: var(--color-kirec);
-    background-color: var(--color-bazalt-derin);
+    color: var(--color-tas-acik);
+    background-color: var(--color-gece);
     -webkit-font-smoothing: antialiased;
   }
-
-  h1,
-  h2,
-  h3 {
+  h1, h2, h3 {
     font-family: var(--font-display);
     font-weight: 500;
     font-variation-settings: "opsz" 120;
     letter-spacing: -0.015em;
     text-wrap: balance;
   }
-
-  p {
-    text-wrap: pretty;
-  }
-
+  p { text-wrap: pretty; }
   :focus-visible {
-    outline: 2px solid var(--color-bugday);
+    outline: 2px solid var(--color-okra);
     outline-offset: 3px;
   }
 }
 
-/* Okunabilirliği 3B katmanın üstünde güvenceye alan yumuşak zemin. */
-.yazi-zemini {
+/* Metin perdesi: sayfa boyunca tek parça durur, bölüm bölüm kutu
+   çizmez — kutu kenarları 3B katmanın üstünde dikiş gibi görünüyordu. */
+.metin-perdesi {
   background: linear-gradient(
-    100deg,
-    color-mix(in oklab, var(--color-bazalt-derin) 88%, transparent) 0%,
-    color-mix(in oklab, var(--color-bazalt-derin) 72%, transparent) 55%,
+    96deg,
+    color-mix(in oklab, var(--color-gece) 95%, transparent) 0%,
+    color-mix(in oklab, var(--color-gece) 88%, transparent) 34%,
+    color-mix(in oklab, var(--color-gece) 62%, transparent) 62%,
     transparent 100%
   );
 }
-
-@media (max-width: 767px) {
-  .yazi-zemini {
-    background: color-mix(in oklab, var(--color-bazalt-derin) 82%, transparent);
+@media (max-width: 899px) {
+  .metin-perdesi {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-gece) 92%, transparent) 0%,
+      color-mix(in oklab, var(--color-gece) 82%, transparent) 70%,
+      color-mix(in oklab, var(--color-gece) 70%, transparent) 100%
+    );
   }
 }

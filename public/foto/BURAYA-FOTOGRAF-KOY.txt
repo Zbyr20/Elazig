@@ -1,0 +1,12 @@
+Kitabe panellerine kendi fotoğraflarını koymak için bu klasöre şu adlarla ekle:
+
+  harput.jpg
+  hazar.jpg
+  keban.jpg
+  buzluk.jpg
+
+Dosya varsa panel otomatik olarak fotoğrafı kullanır; yoksa taşa oyulmuş
+çizime düşer. Kod değişikliği gerekmez.
+
+Depo herkese açık olduğu için yalnızca kendi çektiğin ya da açık lisanslı
+fotoğrafları koy.

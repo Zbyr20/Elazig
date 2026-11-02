@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
-import type { Mekan } from "../data/icerik";
-
-const baglantilar = [
-  { id: "harput", ad: "Harput" },
-  { id: "hazar", ad: "Hazar" },
-  { id: "keban", ad: "Keban" },
-  { id: "buzluk", ad: "Buzluk" },
-  { id: "bag", ad: "Bağ" },
-  { id: "sofra", ad: "Sofra" },
-];
+import type { Duvar } from "../data/icerik";
+import { duvarlar } from "../data/icerik";
 
 export function Ustbar() {
-  const [kucuk, setKucuk] = useState(false);
-
+  const [koyu, setKoyu] = useState(false);
   useEffect(() => {
-    const f = () => setKucuk(window.scrollY > 120);
+    const f = () => setKoyu(window.scrollY > 100);
     f();
     window.addEventListener("scroll", f, { passive: true });
     return () => window.removeEventListener("scroll", f);
@@ -23,51 +14,56 @@ export function Ustbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-30 transition-colors duration-500 ${
-        kucuk ? "bg-bazalt-derin/85 backdrop-blur-sm" : ""
+        koyu ? "bg-gece/85 backdrop-blur-sm" : ""
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-baseline gap-6 px-5 py-4 sm:px-8">
         <a
           href="#ust"
-          className="font-display text-lg font-medium tracking-tight text-kirec"
+          className="font-display text-lg text-tas-acik"
           style={{ fontVariationSettings: '"opsz" 144' }}
         >
           Elazığ
         </a>
-        <ul className="ml-auto hidden gap-6 text-sm text-kirec/55 sm:flex">
-          {baglantilar.map((b) => (
-            <li key={b.id}>
-              <a href={`#${b.id}`} className="transition-colors hover:text-kirec">
-                {b.ad}
+        <ul className="ml-auto hidden gap-6 text-sm text-tas-acik/55 sm:flex">
+          {duvarlar.map((d) => (
+            <li key={d.id}>
+              <a href={`#${d.id}`} className="transition-colors hover:text-tas-acik">
+                {d.ad}
               </a>
             </li>
           ))}
+          <li>
+            <a href="#sofra" className="transition-colors hover:text-tas-acik">
+              Sofra
+            </a>
+          </li>
         </ul>
       </nav>
     </header>
   );
 }
 
-/** Sayfanın solunda inişin nerede olduğunu gösteren ince ray. */
+/** Kaç duvar döndüğümüzü gösteren, solda duran ince ray. */
 export function Ray({ etkin }: { etkin: string }) {
   return (
     <div className="pointer-events-none fixed left-5 top-1/2 z-20 hidden -translate-y-1/2 lg:block">
       <ul className="flex flex-col gap-3">
-        {baglantilar.slice(0, 5).map((b) => {
-          const aktif = b.id === etkin;
+        {duvarlar.map((d) => {
+          const aktif = d.id === etkin;
           return (
-            <li key={b.id} className="flex items-center gap-3">
+            <li key={d.id} className="flex items-center gap-3">
               <span
                 className={`block h-px transition-all duration-500 ${
-                  aktif ? "w-7 bg-bugday" : "w-3 bg-kirec/25"
+                  aktif ? "w-8 bg-okra" : "w-3 bg-tas-acik/25"
                 }`}
               />
               <span
                 className={`text-xs transition-opacity duration-500 ${
-                  aktif ? "text-bugday opacity-100" : "opacity-0"
+                  aktif ? "text-okra opacity-100" : "opacity-0"
                 }`}
               >
-                {b.ad}
+                {d.ad}
               </span>
             </li>
           );
@@ -79,51 +75,42 @@ export function Ray({ etkin }: { etkin: string }) {
 
 export function Hero() {
   return (
-    <section
-      id="ust"
-      className="relative flex min-h-screen items-center px-5 pt-24 sm:px-8"
-    >
-      <div className="yazi-zemini -mx-5 max-w-2xl px-5 py-10 sm:-mx-8 sm:px-8">
+    <section id="ust" className="relative flex min-h-screen items-center px-5 pt-24 sm:px-8">
+      <div className="max-w-2xl py-10">
         <h1
-          className="font-display text-[clamp(2.6rem,7vw,5.2rem)] leading-[0.95] text-kirec"
+          className="font-display text-[clamp(2.5rem,6.6vw,5rem)] leading-[0.95] text-tas-acik"
           style={{ fontVariationSettings: '"opsz" 144' }}
         >
-          Taşın üstünde kurulmuş,
-          <br />
-          suyun çevrelediği
-          <br />
-          bir yayla
+          Taşın dört yüzü
         </h1>
-        <p className="mt-7 max-w-[52ch] text-base leading-relaxed text-kirec/70 sm:text-lg">
-          Elazığ'ı anlatmanın en kısa yolu, yukarıdan aşağı inmektir. Harput'un
-          kaya platosundan başlayıp Hazar'ın dibine, oradan Fırat'ın önüne
-          kurulmuş gövdeye ve yazın buz tutan bir mağaraya.
+        <p className="mt-7 max-w-[52ch] text-base leading-relaxed text-tas-acik/70 sm:text-lg">
+          Harput'un kesme taşından bir kule. Dört duvarında Elazığ'ın dört ayrı
+          yüzü kayıtlı: kayanın üstündeki kale, fayın açtığı göl, Fırat'ın önüne
+          kurulan gövde ve yazın buz tutan mağara.
         </p>
-        <p className="mt-10 text-sm text-kirec/40">
-          Sayfayı kaydırdıkça iniş başlar.
+        <p className="mt-10 text-sm text-tas-acik/40">
+          Kaydırdıkça kule döner ve her duvarda bir kat aşağı inersin.
         </p>
       </div>
     </section>
   );
 }
 
-export function MekanBolumu({ mekan }: { mekan: Mekan }) {
-  const saga = mekan.modelIndex % 2 === 1;
-
+export function DuvarBolumu({ duvar, sira }: { duvar: Duvar; sira: number }) {
   return (
-    <section
-      id={mekan.id}
-      className={`relative flex min-h-screen items-center px-5 sm:px-8 ${
-        saga ? "justify-end" : ""
-      }`}
-    >
-      <div className="yazi-zemini -mx-5 max-w-xl px-5 py-10 sm:-mx-8 sm:px-8">
-        <p className="text-sm text-hazar">{mekan.tur}</p>
-        <h2 className="mt-3 font-display text-[clamp(2rem,4.5vw,3.2rem)] leading-tight text-kirec">
-          {mekan.ad}
+    <section id={duvar.id} className="relative flex min-h-screen items-center px-5 sm:px-8">
+      <div className="max-w-xl py-10">
+        <p className="font-display text-sm text-okra">
+          {["Birinci", "İkinci", "Üçüncü", "Dördüncü"][sira]} duvar · {duvar.tur}
+        </p>
+        <h2 className="mt-3 font-display text-[clamp(2rem,4.4vw,3.1rem)] leading-tight text-tas-acik">
+          {duvar.ad}
         </h2>
-        <p className="mt-5 text-lg leading-relaxed text-kirec/80">{mekan.giris}</p>
-        <p className="mt-4 max-w-[60ch] leading-relaxed text-kirec/60">{mekan.govde}</p>
+        <p className="mt-5 text-lg leading-relaxed text-tas-acik/80">{duvar.giris}</p>
+        <p className="mt-4 max-w-[60ch] leading-relaxed text-tas-acik/62">{duvar.govde}</p>
+        <p className="mt-6 max-w-[58ch] border-l-2 border-okra/50 pl-4 text-sm leading-relaxed text-tas-acik/55">
+          {duvar.not}
+        </p>
       </div>
     </section>
   );
